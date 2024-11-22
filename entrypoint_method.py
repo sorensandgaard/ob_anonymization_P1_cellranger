@@ -20,7 +20,7 @@ def run_method(output_dir, name, input_files, parameters):
     cr_command += f" --create-bam true --expect-cells 15000 --localcores 16 --localmem 56"
 
     content = f"This is the cellranger command\n{cr_command}\n\n"
-    content = f"This is the content of parameter: {parameters}\n\n"
+    content = f"This is the content of parameter: {parameters[0]}\n\n"
     with open(method_mapping_file, 'w') as file:
         file.write(content)
 
