@@ -38,7 +38,7 @@ def run_method(output_dir, name, input_files, parameters):
     # Run Bamboozle
     bam_pos = f"{cr_outdir}/outs/possorted_genome_bam.bam"
     ref_pos = f"{ref_dir}/fasta/genome.fa"
-    anon_bam_pos = f"{output_dir}/bamboozled.bam"
+    anon_bam_pos = f"{output_dir}/{name}.bamboozled.bam"
     bamboozle_command = f"BAMboozle --bam {bam_pos} --out {anon_bam_pos} --fa {ref_pos}"
     content += f"Bamboozle command:\n{bamboozle_command}\n"
     # a = subprocess.run(bamboozle_command.split(),capture_output=True,text=True)
