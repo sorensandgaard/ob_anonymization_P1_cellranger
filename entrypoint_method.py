@@ -5,7 +5,8 @@ import subprocess
 def run_method(output_dir, name, input_files, parameters):
     # Create the output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
-    method_mapping_file = os.path.join(output_dir, f'{name}.model.out.txt')
+    # method_mapping_file = os.path.join(output_dir, f'{name}.model.out.txt')
+    method_mapping_file = os.path.join(output_dir, f'{name}.possorted.bam')
 
     # Run Cellranger ctrl
     ref_dir = f"01_references/refdata-gex-GRCh38-2024-A"
@@ -13,7 +14,6 @@ def run_method(output_dir, name, input_files, parameters):
     os.makedirs(cr_outdir, exist_ok=True)
 
     cr_command_1 = f"cellranger count --id testing --fastqs {input_files}"
-    #cr_command_1 += f" --output-dir {output_dir} --transcriptome 01_references/refdata-gex-GRCh38-2024-A"
     cr_command_1 += f" --output-dir {cr_outdir} --transcriptome {ref_dir}"
     cr_command_1 += f" --create-bam true --expect-cells 15000 --localcores 16 --localmem 56"
 
@@ -21,44 +21,13 @@ def run_method(output_dir, name, input_files, parameters):
     with open(method_mapping_file, 'w') as file:
         file.write(content)
 
-    #a = subprocess.run(cr_command_1.split(),capture_output=True,text=True)
+    a = subprocess.run(cr_command_1.split(),capture_output=True,text=True)
     content += f"Cellranger output:\n"
-    #content += a.stdout
+    content += a.stdout
     content += "\n\n"
 
     with open(method_mapping_file, 'w') as file:
         file.write(content)
-
-    # Run Bamboozle case
-    bam_pos = f"{cr_outdir}/outs/possorted_genome_bam.bam"
-    ref_pos = f"{ref_dir}/fasta/genome.fa"
-    anon_bam_pos = f"{cr_outdir}/outs/bamboozled.bam"
-    bamboozle_command = f"BAMboozle --bam {bam_pos} --out {anon_bam_pos} --fa {ref_pos}"
-    content += f"Bamboozle command:\n{bamboozle_command}\n"
-    a = subprocess.run(bamboozle_command.split(),capture_output=True,text=True)
-    content += f"Bamboozle output:\n{a.stdout}\n\n"
-
-    with open(method_mapping_file, 'w') as file:
-        file.write(content)
-
-    # Run Bamtofastq case
-    anon_fastq_pos = f"{output_dir}/anon_fastqs"
-    bamtofastq_command = f"bamtofastq --nthreads=16 {anon_bam_pos} {anon_fastq_pos}"
-    content += f"Bamtofastq command:\n{bamtofastq_command}\n"
-    a = subprocess.run(bamtofastq_command.split(),capture_output=True,text=True)
-    content += f"Bamtofastq output:\n{a.stdout}\n\n"
-
-    # Run Cellranger case 2
-
-#    content += f"This is the command to run cellranger on the first reference genome\n"
-#    content += cr_command_1
-#    content += "\n\n"
-
-#    content = concatenate_input_content(input_files)
-
-    with open(method_mapping_file, 'w') as file:
-        file.write(content)
-
 
 def main():
     # Create argument parser
