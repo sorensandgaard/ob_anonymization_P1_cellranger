@@ -23,7 +23,7 @@ def run_method(output_dir, name, input_files, parameters):
 
     # a = subprocess.run(cr_command_1.split(),capture_output=True,text=True)
     content += f"Cellranger output:\n"
-    content += a.stdout
+    # content += a.stdout
     content += "\n\n"
 
     with open(method_mapping_file, 'w') as file:
