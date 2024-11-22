@@ -45,7 +45,7 @@ def run_method(output_dir, name, input_files, parameters):
     # content += f"Bamboozle output:\n{a.stdout}\n\n"
 
     # Create dummy bamboozle files
-    a = subprocess.run(f"touch bamboozled.bam",capture_output=True,text=True)
+    a = subprocess.run(f"touch {anon_bam_pos}",capture_output=True,text=True)
 
     with open(method_mapping_file, 'w') as file:
         file.write(content)
