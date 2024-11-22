@@ -9,7 +9,7 @@ def run_method(output_dir, name, input_files, parameters):
     method_mapping_file = os.path.join(output_dir, f'{name}.possorted.bam')
 
     # Run Cellranger ctrl
-    ref_dir = f"01_references/parameters[0]"
+    ref_dir = f"01_references/{parameters[0]}"
     cr_outdir = f"{output_dir}/cellranger_out"
     os.makedirs(cr_outdir, exist_ok=True)
     os.makedirs(f"{cr_outdir}/outs",exist_ok=True) # dummy creation
