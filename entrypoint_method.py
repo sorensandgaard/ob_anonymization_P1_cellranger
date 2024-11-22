@@ -6,7 +6,7 @@ def run_method(output_dir, name, input_files, parameters):
     # Create the output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
     # method_mapping_file = os.path.join(output_dir, f'{name}.model.out.txt')
-    method_mapping_file = os.path.join(output_dir, f'logfile.txt')
+    log_file = os.path.join(output_dir, f'logfile.txt')
 
     # Run Cellranger ctrl
     ref_dir = f"01_references/{parameters[0]}"
@@ -21,8 +21,6 @@ def run_method(output_dir, name, input_files, parameters):
 
     content = f"This is the cellranger command\n{cr_command}\n\n"
     content += f"This is the content of parameter: {parameters[0]}\n\n"
-    with open(method_mapping_file, 'w') as file:
-        file.write(content)
 
     # a = subprocess.run(cr_command.split(),capture_output=True,text=True)
     content += f"Cellranger output:\n"
@@ -47,9 +45,6 @@ def run_method(output_dir, name, input_files, parameters):
     # Create dummy bamboozle files
     a = subprocess.run(f"touch {anon_bam_pos}".split(),capture_output=True,text=True)
 
-    with open(method_mapping_file, 'w') as file:
-        file.write(content)
-
     # cp_bam_command = f"cp {cr_outdir}/outs/possorted_genome_bam.bam* {output_dir}/."
     # a = subprocess.run(cp_bam_command.split(),capture_output=True,text=True)
 
@@ -61,7 +56,7 @@ def run_method(output_dir, name, input_files, parameters):
 
     content += f"All clear - successfull run"
 
-    with open(method_mapping_file, 'w') as file:
+    with open(log_file, 'w') as file:
         file.write(content)
 
 def main():
