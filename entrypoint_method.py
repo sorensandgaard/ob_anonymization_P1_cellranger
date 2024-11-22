@@ -30,7 +30,7 @@ def run_method(output_dir, name, input_files, parameters):
     content += "\n\n"
 
     # Create dummy cellranger files
-    subprocess.run(f"cp {method_mapping_file} {cr_outdir}/outs/possorted_genome_bam.bam".split(),capture_output=True,text=True)
+    subprocess.run(f"cp {log_file} {cr_outdir}/outs/possorted_genome_bam.bam".split(),capture_output=True,text=True)
     subprocess.run(f"touch {cr_outdir}/outs/filtered_feature_bc_matrix/test1.txt".split(),capture_output=True,text=True)
     subprocess.run(f"touch {cr_outdir}/outs/filtered_feature_bc_matrix/test2.txt".split(),capture_output=True,text=True)
 
