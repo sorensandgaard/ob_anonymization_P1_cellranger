@@ -40,7 +40,7 @@ def run_method(output_dir, name, input_files, parameters):
     a = subprocess.run(cp_matrix_command.split(),capture_output=True,text=True)
 
     cleanup_command = f"rm -rf {cr_outdir}"
-    a = subprocess.run(cleanup_commmand.split(),capture_output=True,text=True)
+    a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
 
     content += f"All clear - successfull run"
 
