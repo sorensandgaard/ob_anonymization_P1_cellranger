@@ -25,17 +25,33 @@ def run_method(output_dir, name, input_files, parameters):
         file.write(content)
 
     # a = subprocess.run(cr_command.split(),capture_output=True,text=True)
-    # Create dummy files
-    subprocess.run(f"cp {method_mapping_file} {cr_outdir}/outs/possorted_genome_bam.bam".split(),capture_output=True,text=True)
-    subprocess.run(f"touch {cr_outdir}/outs/filtered_feature_bc_matrix/test1.txt".split(),capture_output=True,text=True)
-    subprocess.run(f"touch {cr_outdir}/outs/filtered_feature_bc_matrix/test2.txt".split(),capture_output=True,text=True)
-
     content += f"Cellranger output:\n"
     # content += a.stdout
     content += "\n\n"
 
-    cp_bam_command = f"cp {cr_outdir}/outs/possorted_genome_bam.bam* {output_dir}/."
-    a = subprocess.run(cp_bam_command.split(),capture_output=True,text=True)
+    # Create dummy cellranger files
+    subprocess.run(f"cp {method_mapping_file} {cr_outdir}/outs/possorted_genome_bam.bam".split(),capture_output=True,text=True)
+    subprocess.run(f"touch {cr_outdir}/outs/filtered_feature_bc_matrix/test1.txt".split(),capture_output=True,text=True)
+    subprocess.run(f"touch {cr_outdir}/outs/filtered_feature_bc_matrix/test2.txt".split(),capture_output=True,text=True)
+
+
+    # Run Bamboozle
+    bam_pos = f"{cr_outdir}/outs/possorted_genome_bam.bam"
+    ref_pos = f"{ref_dir}/fasta/genome.fa"
+    anon_bam_pos = f"{output_dir}/bamboozled.bam"
+    bamboozle_command = f"BAMboozle --bam {bam_pos} --out {anon_bam_pos} --fa {ref_pos}"
+    content += f"Bamboozle command:\n{bamboozle_command}\n"
+    # a = subprocess.run(bamboozle_command.split(),capture_output=True,text=True)
+    # content += f"Bamboozle output:\n{a.stdout}\n\n"
+
+    # Create dummy bamboozle files
+    a = subprocess.run(f"touch bamboozled.bam",capture_output=True,text=True)
+
+    with open(method_mapping_file, 'w') as file:
+        file.write(content)
+
+    # cp_bam_command = f"cp {cr_outdir}/outs/possorted_genome_bam.bam* {output_dir}/."
+    # a = subprocess.run(cp_bam_command.split(),capture_output=True,text=True)
 
     cp_matrix_command = f"cp -r {cr_outdir}/outs/filtered_feature_bc_matrix {output_dir}/."
     a = subprocess.run(cp_matrix_command.split(),capture_output=True,text=True)
