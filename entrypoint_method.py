@@ -6,7 +6,7 @@ def run_method(output_dir, name, input_files, parameters):
     # Create the output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
     # method_mapping_file = os.path.join(output_dir, f'{name}.model.out.txt')
-    log_file = os.path.join(output_dir, f'logfile.txt')
+    log_file = os.path.join(output_dir, f'{name}.log.txt')
 
     # Run Cellranger ctrl
     ref_dir = f"01_references/{parameters[0]}"
