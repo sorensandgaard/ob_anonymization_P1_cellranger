@@ -12,8 +12,6 @@ def run_method(output_dir, name, input_files, parameters):
     ref_dir = f"01_references/{parameters[0]}"
     cr_outdir = f"{output_dir}/cellranger_out"
     os.makedirs(cr_outdir, exist_ok=True)
-    os.makedirs(f"{cr_outdir}/outs",exist_ok=True) # dummy creation
-    os.makedirs(f"{cr_outdir}/outs/filtered_feature_bc_matrix",exist_ok=True) # dummy creation
 
     cr_command = f"cellranger count --id testing --fastqs {input_files}"
     cr_command += f" --output-dir {cr_outdir} --transcriptome {ref_dir}"
@@ -22,15 +20,17 @@ def run_method(output_dir, name, input_files, parameters):
     content = f"This is the cellranger command\n{cr_command}\n\n"
     content += f"This is the content of parameter: {parameters[0]}\n\n"
 
-    # a = subprocess.run(cr_command.split(),capture_output=True,text=True)
+    a = subprocess.run(cr_command.split(),capture_output=True,text=True)
     content += f"Cellranger output:\n"
-    # content += a.stdout
+    content += a.stdout
     content += "\n\n"
 
     # Create dummy cellranger files
-    subprocess.run(f"cp {log_file} {cr_outdir}/outs/possorted_genome_bam.bam".split(),capture_output=True,text=True)
-    subprocess.run(f"touch {cr_outdir}/outs/filtered_feature_bc_matrix/test1.txt".split(),capture_output=True,text=True)
-    subprocess.run(f"touch {cr_outdir}/outs/filtered_feature_bc_matrix/test2.txt".split(),capture_output=True,text=True)
+    # os.makedirs(f"{cr_outdir}/outs",exist_ok=True) # dummy creation
+    # os.makedirs(f"{cr_outdir}/outs/filtered_feature_bc_matrix",exist_ok=True) # dummy creation
+    # subprocess.run(f"cp {log_file} {cr_outdir}/outs/possorted_genome_bam.bam".split(),capture_output=True,text=True)
+    # subprocess.run(f"touch {cr_outdir}/outs/filtered_feature_bc_matrix/test1.txt".split(),capture_output=True,text=True)
+    # subprocess.run(f"touch {cr_outdir}/outs/filtered_feature_bc_matrix/test2.txt".split(),capture_output=True,text=True)
 
 
     # Run Bamboozle
@@ -39,18 +39,20 @@ def run_method(output_dir, name, input_files, parameters):
     anon_bam_pos = f"{output_dir}/{name}.bamboozled.bam"
     bamboozle_command = f"BAMboozle --bam {bam_pos} --out {anon_bam_pos} --fa {ref_pos}"
     content += f"Bamboozle command:\n{bamboozle_command}\n"
-    # a = subprocess.run(bamboozle_command.split(),capture_output=True,text=True)
-    # content += f"Bamboozle output:\n{a.stdout}\n\n"
+    a = subprocess.run(bamboozle_command.split(),capture_output=True,text=True)
+    content += f"Bamboozle output:\n{a.stdout}\n\n"
 
     # Create dummy bamboozle files
-    a = subprocess.run(f"touch {anon_bam_pos}".split(),capture_output=True,text=True)
+    # a = subprocess.run(f"touch {anon_bam_pos}".split(),capture_output=True,text=True)
 
     # cp_bam_command = f"cp {cr_outdir}/outs/possorted_genome_bam.bam* {output_dir}/."
     # a = subprocess.run(cp_bam_command.split(),capture_output=True,text=True)
 
+    # Move expression matrix to outer layer for comparisons
     cp_matrix_command = f"cp -r {cr_outdir}/outs/filtered_feature_bc_matrix {output_dir}/."
     a = subprocess.run(cp_matrix_command.split(),capture_output=True,text=True)
 
+    # Remove cellranger folder (not needed, and takes up quite a lot of space)
     cleanup_command = f"rm -rf {cr_outdir}"
     a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
 
