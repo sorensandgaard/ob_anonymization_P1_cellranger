@@ -15,7 +15,7 @@ def run_method(output_dir, name, input_files, parameters):
 
     cr_command = f"cellranger count --id testing --fastqs {input_files}"
     cr_command += f" --output-dir {cr_outdir} --transcriptome {ref_dir}"
-    cr_command += f" --create-bam true --expect-cells 15000 --localcores 16 --localmem 56"
+    cr_command += f" --create-bam true --expect-cells 15000 --localcores 24 --localmem 100"
 
     content = f"This is the cellranger command\n{cr_command}\n\n"
     content += f"This is the content of parameter: {parameters[0]}\n\n"
