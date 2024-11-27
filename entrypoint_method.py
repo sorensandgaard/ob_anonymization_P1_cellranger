@@ -20,9 +20,9 @@ def run_method(output_dir, name, input_files, parameters):
     content = f"This is the cellranger command\n{cr_command}\n\n"
     content += f"This is the content of parameter: {parameters[0]}\n\n"
 
-    a = subprocess.run(cr_command.split(),capture_output=True,text=True)
+    # a = subprocess.run(cr_command.split(),capture_output=True,text=True)
     content += f"Cellranger output:\n"
-    content += a.stdout
+    # content += a.stdout
     content += "\n\n"
 
     # Create dummy cellranger files
@@ -53,8 +53,8 @@ def run_method(output_dir, name, input_files, parameters):
     a = subprocess.run(cp_matrix_command.split(),capture_output=True,text=True)
 
     # Remove cellranger folder (not needed, and takes up quite a lot of space)
-    cleanup_command = f"rm -rf {cr_outdir}"
-    a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
+    # cleanup_command = f"rm -rf {cr_outdir}"
+    # a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
 
     content += f"All clear - successfull run"
 
