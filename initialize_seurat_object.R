@@ -1,7 +1,8 @@
 #!/usr/bin/env Rscript
 args = commandArgs(trailingOnly=TRUE)
 
-print(args[1])
-print(args[2])
+a <- data.frame(t1 = 1:5)
+a$t2 <- args[1]
+a$t3 <- args[2]
 
-# args = filtered_feature_
+saveRDS(a,file = "test.rds")
