@@ -24,9 +24,9 @@ def run_method(output_dir, name, input_files, parameters):
 
     content = f"This is the cellranger command\n{cr_command}\n\n"
 
-    a = subprocess.run(cr_command.split(),capture_output=True,text=True)
+    # a = subprocess.run(cr_command.split(),capture_output=True,text=True)
     content += f"Cellranger output: (temporarily left out)\n"
-    content += a.stdout
+    # content += a.stdout
     content += f"\n\n"
 
     # Create dummy cellranger files
@@ -54,9 +54,9 @@ def run_method(output_dir, name, input_files, parameters):
     anon_bam_pos = f"{output_dir}/{name}.bamboozled.bam"
     bamboozle_command = f"BAMboozle --bam {bam_pos} --out {anon_bam_pos} --fa {ref_pos}"
     content += f"Bamboozle command:\n{bamboozle_command}\n"
-    a = subprocess.run(bamboozle_command.split(),capture_output=True,text=True)
+    # a = subprocess.run(bamboozle_command.split(),capture_output=True,text=True)
     content += f"Bamboozle output:\n"
-    content += a.stdout
+    # content += a.stdout
     content += f"\n\n"
 
 
