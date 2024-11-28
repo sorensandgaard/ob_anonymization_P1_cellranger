@@ -11,6 +11,8 @@ a$t2 <- output_dir
 a$t3 <- data_input_dir
 
 data <- Read10X(data.dir = data_input_dir)
-seurat_object = CreateSeuratObject(counts = data$`Gene Expression`)
+seurat_object = CreateSeuratObject(counts = data)
 
 saveRDS(seurat_object,file = "test.rds")
+
+
