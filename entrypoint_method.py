@@ -41,12 +41,12 @@ def run_method(output_dir, name, input_files, parameters):
     script_R_file = os.path.join(output_dir, f'initialize_seurat_object.R')
     create_file(script_R_file,R_script_url)
 
-    # filtered_expr_pos = f"{cr_outdir}/outs/filtered_feature_bc_matrix"
-    # R_command = f"Rscript {script_R_file} {output_dir} {filtered_expr_pos}"
-    # a = subprocess.run(R_command.split(),capture_output=True,text=True)
-    # content += f"R script output:\n"
-    # content += a.stdout
-    # content += "\n\n"
+    filtered_expr_pos = f"{cr_outdir}/outs/filtered_feature_bc_matrix"
+    R_command = f"Rscript {script_R_file} {output_dir} {filtered_expr_pos}"
+    a = subprocess.run(R_command.split(),capture_output=True,text=True)
+    content += f"R script output:\n"
+    content += a.stdout
+    content += "\n\n"
 
     # Run Bamboozle
     bam_pos = f"{cr_outdir}/outs/possorted_genome_bam.bam"
