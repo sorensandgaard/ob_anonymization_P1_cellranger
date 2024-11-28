@@ -1,8 +1,16 @@
 #!/usr/bin/env Rscript
+library("Seurat")
+library("tidyverse")
+
 args = commandArgs(trailingOnly=TRUE)
+output_dir <- args[1]
+data_input_dir <- args[2]
 
 a <- data.frame(t1 = 1:5)
-a$t2 <- args[1]
-a$t3 <- args[2]
+a$t2 <- output_dir
+a$t3 <- data_input_dir
 
-saveRDS(a,file = "test.rds")
+data <- Read10X(data.dir = data_input_dir)
+seurat_object = CreateSeuratObject(counts = data$`Gene Expression`)
+
+saveRDS(seurat_object,file = "test.rds")
