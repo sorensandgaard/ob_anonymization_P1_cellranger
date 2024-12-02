@@ -24,29 +24,17 @@ def run_method(output_dir, name, input_files, parameters):
 
     content = f"This is the cellranger command\n{cr_command}\n\n"
 
-    # a = subprocess.run(cr_command.split(),capture_output=True,text=True)
+    a = subprocess.run(cr_command.split(),capture_output=True,text=True)
     content += f"Cellranger output: (temporarily left out)\n"
-    # content += a.stdout
+    content += a.stdout
     content += f"\n\n"
 
     # Create dummy cellranger files
-    os.makedirs(f"{cr_outdir}/outs",exist_ok=True) # dummy creation
-    os.makedirs(f"{cr_outdir}/outs/filtered_feature_bc_matrix",exist_ok=True) # dummy creation
-    subprocess.run(f"cp {log_file} {cr_outdir}/outs/possorted_genome_bam.bam".split(),capture_output=True,text=True)
-    subprocess.run(f"touch {cr_outdir}/outs/filtered_feature_bc_matrix/test1.txt".split(),capture_output=True,text=True)
-    subprocess.run(f"touch {cr_outdir}/outs/filtered_feature_bc_matrix/test2.txt".split(),capture_output=True,text=True)
-
-    # Convert cellranger output to seurat object
-    # R_script_url = "https://raw.githubusercontent.com/sorensandgaard/ob_anonymization_P1_cellranger/main/initialize_seurat_object.R"
-    # script_R_file = os.path.join(output_dir, f'initialize_seurat_object.R')
-    # create_file(script_R_file,R_script_url)
-
-    # filtered_expr_pos = f"{cr_outdir}/outs/filtered_feature_bc_matrix"
-    # R_command = f"Rscript {script_R_file} {output_dir} {filtered_expr_pos}"
-    # a = subprocess.run(R_command.split(),capture_output=True,text=True)
-    # content += f"R script output:\n"
-    # content += a.stdout
-    # content += "\n\n"
+    # os.makedirs(f"{cr_outdir}/outs",exist_ok=True) # dummy creation
+    # os.makedirs(f"{cr_outdir}/outs/filtered_feature_bc_matrix",exist_ok=True) # dummy creation
+    # subprocess.run(f"cp {log_file} {cr_outdir}/outs/possorted_genome_bam.bam".split(),capture_output=True,text=True)
+    # subprocess.run(f"touch {cr_outdir}/outs/filtered_feature_bc_matrix/test1.txt".split(),capture_output=True,text=True)
+    # subprocess.run(f"touch {cr_outdir}/outs/filtered_feature_bc_matrix/test2.txt".split(),capture_output=True,text=True)
 
     # Run Bamboozle
     bam_pos = f"{cr_outdir}/outs/possorted_genome_bam.bam"
@@ -54,14 +42,14 @@ def run_method(output_dir, name, input_files, parameters):
     anon_bam_pos = f"{output_dir}/{name}.bamboozled.bam"
     bamboozle_command = f"BAMboozle --bam {bam_pos} --out {anon_bam_pos} --fa {ref_pos}"
     content += f"Bamboozle command:\n{bamboozle_command}\n"
-    # a = subprocess.run(bamboozle_command.split(),capture_output=True,text=True)
+    a = subprocess.run(bamboozle_command.split(),capture_output=True,text=True)
     content += f"Bamboozle output:\n"
-    # content += a.stdout
+    content += a.stdout
     content += f"\n\n"
 
 
     # Create dummy bamboozle files
-    a = subprocess.run(f"touch {anon_bam_pos}".split(),capture_output=True,text=True)
+    # a = subprocess.run(f"touch {anon_bam_pos}".split(),capture_output=True,text=True)
 
     # Move expression matrix to outer layer for comparisons
     # cp_matrix_command = f"cp -r {cr_outdir}/outs/filtered_feature_bc_matrix {output_dir}/."
