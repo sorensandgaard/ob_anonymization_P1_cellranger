@@ -39,7 +39,7 @@ def run_method(output_dir, name, input_files, parameters):
     a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
 
     fasta_path = f"{ref_dir}/fasta/genome.fa"
-    with open(f"{output_dir}/{name}_genome.txt", 'w') as file:
+    with open(f"{output_dir}/genome.txt", 'w') as file:
         file.write(fasta_path)
 
     content += f"All clear - successfull run\n"
