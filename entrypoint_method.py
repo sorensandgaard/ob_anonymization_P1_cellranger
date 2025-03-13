@@ -24,27 +24,13 @@ def run_method(output_dir, name, input_files, parameters):
 
     content = f"This is the cellranger command\n{cr_command}\n\n"
 
-    a = subprocess.run(cr_command.split(),capture_output=True,text=True)
+    # a = subprocess.run(cr_command.split(),capture_output=True,text=True)
     content += f"Cellranger output: (temporarily left out)\n"
-    content += a.stdout
+    # content += a.stdout
     content += f"\n\n"
 
-    # Run Bamboozle
-    # bam_pos = f"{cr_outdir}/outs/possorted_genome_bam.bam"
-    # ref_pos = f"{ref_dir}/fasta/genome.fa"
-    # anon_bam_pos = f"{output_dir}/{name}.bamboozled.bam"
-    # bamboozle_command = f"BAMboozle --bam {bam_pos} --out {anon_bam_pos} --fa {ref_pos}"
-    # content += f"Bamboozle command:\n{bamboozle_command}\n"
-    # a = subprocess.run(bamboozle_command.split(),capture_output=True,text=True)
-    # content += f"Bamboozle output:\n"
-    # content += a.stdout
-    # content += f"\n\n"
-
-
-    # Create dummy bamboozle files
-    # a = subprocess.run(f"touch {anon_bam_pos}".split(),capture_output=True,text=True)
-
-    # Move expression matrix to outer layer for comparisons
+    # Move expression matrix to reference-folder for comparison (faster runtime later) 
+    # * Needs edits
     # cp_matrix_command = f"cp -r {cr_outdir}/outs/filtered_feature_bc_matrix {output_dir}/."
     # a = subprocess.run(cp_matrix_command.split(),capture_output=True,text=True)
 
@@ -56,10 +42,10 @@ def run_method(output_dir, name, input_files, parameters):
     with open(genome_path, 'w') as file:
         file.write(fasta_path)
 
+    content += f"\nfasta: {fasta_path}\ngenome: {genome_path}\n
     content += f"All clear - successfull run\n"
     with open(log_file, 'w') as file:
         file.write(content)
-
 
 
 def main():
