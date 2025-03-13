@@ -55,13 +55,8 @@ def run_method(output_dir, name, input_files, parameters):
     content += f"All clear - successfull run\n"
     content += f"Before try-catch\n"
     fasta_path = f"{ref_dir}/fasta/genome.fa"
-    try:
-        content += f"Testing try-catch\n"
-        with open(genome_path, 'w') as file:
-            file.write("Testing write")
-        content += f"Successful write\n"
-    except Exception as e:
-        content += f"Error? {e}\n"
+    with open(genome_path, 'w') as file:
+        file.write(fasta_path)
     content += f"After try-catch\n"
     content += f"{fasta_path}\n{genome_path}"
 
