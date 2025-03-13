@@ -11,7 +11,7 @@ def run_method(output_dir, name, input_files, parameters):
     # Create the output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
     log_file = os.path.join(output_dir, f'{name}.log.txt')
-    genome_path = os.path.join(output_dir, f'{name}.genome.txt')    
+    genome_path = os.path.join(output_dir, f'refgenome.txt')    
 
     # Run Cellranger ctrl
     ref_dir = f"01_references/{parameters[0]}"
@@ -24,9 +24,9 @@ def run_method(output_dir, name, input_files, parameters):
 
     content = f"This is the cellranger command\n{cr_command}\n\n"
 
-    # a = subprocess.run(cr_command.split(),capture_output=True,text=True)
+    a = subprocess.run(cr_command.split(),capture_output=True,text=True)
     content += f"Cellranger output: (temporarily left out)\n"
-    # content += a.stdout
+    content += a.stdout
     content += f"\n\n"
 
     # Move expression matrix to reference-folder for comparison (faster runtime later) 
