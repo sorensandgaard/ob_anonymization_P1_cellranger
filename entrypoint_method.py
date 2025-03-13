@@ -52,15 +52,14 @@ def run_method(output_dir, name, input_files, parameters):
     cleanup_command = f"rm -rf {cr_outdir}"
     a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
 
-    content += f"All clear - successfull run"
-    
-    log_file = os.path.join(output_dir, f'{name}.log.txt')
-    genome_path = os.path.join(output_dir, f'{name}.genome.fa')
+    content += f"All clear - successfull run\n"
 
+    content += f"Before try-catch\n"
     try:
         content += f"\nEntered Try-catch"
     except Exception as e:
         content += f"\nError?: {e}"
+    content += f"After try-catch\n"
 
     try:
         content += f"\nSuccessfully wrote genome file: {genome_path}"
