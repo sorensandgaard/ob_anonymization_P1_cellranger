@@ -11,7 +11,6 @@ def run_method(output_dir, name, input_files, parameters):
     # Create the output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
     log_file = os.path.join(output_dir, f'{name}.log.txt')
-    genome_path = os.path.join(output_dir, f'refgenome.txt')    
 
     # Run Cellranger ctrl
     ref_dir = f"01_references/{parameters[0]}"
@@ -52,6 +51,10 @@ def run_method(output_dir, name, input_files, parameters):
     # Remove cellranger folder (the data is not needed downstream, and takes up quite a lot of space)
     cleanup_command = f"rm -rf {cr_outdir}"
     a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
+
+    genome_path = os.path.join(output_dir, f'{name}.refgenome.txt')
+    a = subprocess.run(f"touch {genome_path}".split(),capture_output=True,text=True)
+    content += a.stdout
 
     fasta_path = f"{ref_dir}/fasta/genome.fa"
     with open(genome_path, 'w') as file:
