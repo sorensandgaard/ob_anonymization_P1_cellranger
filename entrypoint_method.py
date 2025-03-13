@@ -41,6 +41,7 @@ def run_method(output_dir, name, input_files, parameters):
     fasta_path = f"{ref_dir}/fasta/genome.fa"
     with open(f"{output_dir}/{name}_genome.txt", 'w') as file:
         file.write(fasta_path)
+    content += f"\n{name}\n"
 
     content += f"All clear - successfull run\n"
     with open(log_file, 'w') as file:
