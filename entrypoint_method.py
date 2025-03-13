@@ -11,7 +11,7 @@ def run_method(output_dir, name, input_files, parameters):
     # Create the output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
     log_file = os.path.join(output_dir, f'{name}.log.txt')
-    genome_path = os.path.join(output_dir, f'{name}.genome.fa')
+    genome_path = os.path.join(output_dir, f'{name}.genome.txt')
 
     # Run Cellranger ctrl
     ref_dir = f"01_references/{parameters[0]}"
@@ -64,9 +64,6 @@ def run_method(output_dir, name, input_files, parameters):
         content += f"Error? {e}\n"
     content += f"After try-catch\n"
     content += f"{fasta_path}\n{genome_path}"
-
-    with open("testing_file.txt", 'w') as file:
-        file.write("Testing write")
 
     with open(log_file, 'w') as file:
         file.write(content)
