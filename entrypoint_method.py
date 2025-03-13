@@ -24,9 +24,9 @@ def run_method(output_dir, name, input_files, parameters):
 
     content = f"This is the cellranger command\n{cr_command}\n\n"
 
-    a = subprocess.run(cr_command.split(),capture_output=True,text=True)
+    # a = subprocess.run(cr_command.split(),capture_output=True,text=True)
     content += f"Cellranger output: (temporarily left out)\n"
-    content += a.stdout
+    # content += a.stdout
     content += f"\n\n"
 
     # Move expression matrix to reference-folder for comparison (faster runtime later) 
@@ -39,7 +39,7 @@ def run_method(output_dir, name, input_files, parameters):
     a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
 
     fasta_path = f"{ref_dir}/fasta/genome.fa"
-    with open(genome_path, 'w') as file:
+    with open(f"{output_dir}/{name}_genome.txt", 'w') as file:
         file.write(fasta_path)
 
     content += f"All clear - successfull run\n"
