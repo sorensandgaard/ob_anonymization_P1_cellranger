@@ -40,7 +40,7 @@ def run_method(output_dir, name, input_files, parameters):
     fasta_path = f"{ref_dir}/fasta/genome.fa"
     genome_path = os.path.join(output_dir, f'{name}.genome.txt')
     
-    with open(f"{output_dir}/{name}.genome.txt", 'w') as file:
+    with open(f"{output_dir}/genome.txt", 'w') as file:
         file.write(fasta_path)
 
     content += f"\nfasta: {fasta_path}\ngenome: {genome_path}\n"
