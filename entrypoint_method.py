@@ -58,11 +58,16 @@ def run_method(output_dir, name, input_files, parameters):
     genome_path = os.path.join(output_dir, f'{name}.genome.fa')
 
     try:
+        content += f"\nEntered Try-catch"
+    except Exception as e:
+        content += f"\nError?: {e}"
+
+    try:
         content += f"\nSuccessfully wrote genome file: {genome_path}"
         with open(genome_path, 'w') as file:
             file.write(fasta_path)
     except Exception as e:
-        content += f"\nError: {e}
+        content += f"\nError: {e}"
 
     content += f"\n{fasta_path}\n{genome_path}"
 
