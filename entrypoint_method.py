@@ -11,6 +11,7 @@ def run_method(output_dir, name, input_files, parameters):
     # Create the output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
     log_file = os.path.join(output_dir, f'{name}.log.txt')
+    genome_path = os.path.join(output_dir, f'{name}_genome.txt')    
 
     # Run Cellranger ctrl
     ref_dir = f"01_references/{parameters[0]}"
@@ -23,9 +24,9 @@ def run_method(output_dir, name, input_files, parameters):
 
     content = f"This is the cellranger command\n{cr_command}\n\n"
 
-    # a = subprocess.run(cr_command.split(),capture_output=True,text=True)
+    a = subprocess.run(cr_command.split(),capture_output=True,text=True)
     content += f"Cellranger output: (temporarily left out)\n"
-    # content += a.stdout
+    content += a.stdout
     content += f"\n\n"
 
     # Move expression matrix to reference-folder for comparison (faster runtime later) 
@@ -38,12 +39,9 @@ def run_method(output_dir, name, input_files, parameters):
     a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
 
     fasta_path = f"{ref_dir}/fasta/genome.fa"
-    genome_path = os.path.join(output_dir, f'{name}_genome.txt')
-    
-    with open(f"{output_dir}/{name}_genome.txt", 'w') as file:
+    with open(genome_path, 'w') as file:
         file.write(fasta_path)
 
-    content += f"\nfasta: {fasta_path}\ngenome: {genome_path}\n"
     content += f"All clear - successfull run\n"
     with open(log_file, 'w') as file:
         file.write(content)
