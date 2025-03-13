@@ -53,21 +53,8 @@ def run_method(output_dir, name, input_files, parameters):
     a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
 
     content += f"All clear - successfull run\n"
-
     content += f"Before try-catch\n"
-    try:
-        content += f"\nEntered Try-catch"
-    except Exception as e:
-        content += f"\nError?: {e}"
     content += f"After try-catch\n"
-
-    try:
-        content += f"\nSuccessfully wrote genome file: {genome_path}"
-        with open(genome_path, 'w') as file:
-            file.write(fasta_path)
-    except Exception as e:
-        content += f"\nError: {e}"
-
     content += f"\n{fasta_path}\n{genome_path}"
 
     with open(log_file, 'w') as file:
