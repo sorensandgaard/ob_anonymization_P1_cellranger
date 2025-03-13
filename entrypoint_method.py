@@ -50,7 +50,7 @@ def run_method(output_dir, name, input_files, parameters):
 
     # Remove cellranger folder (the data is not needed downstream, and takes up quite a lot of space)
     cleanup_command = f"rm -rf {cr_outdir}"
-    a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
+    # a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
 
     content += f"All clear - successfull run\n"
     content += f"Before try-catch\n"
@@ -64,6 +64,9 @@ def run_method(output_dir, name, input_files, parameters):
         content += f"Error? {e}\n"
     content += f"After try-catch\n"
     content += f"{fasta_path}\n{genome_path}"
+
+    with open(genome_path, 'w') as file:
+        file.write("Testing write")
 
     with open(log_file, 'w') as file:
         file.write(content)
