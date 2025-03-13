@@ -65,7 +65,7 @@ def run_method(output_dir, name, input_files, parameters):
     content += f"After try-catch\n"
     content += f"{fasta_path}\n{genome_path}"
 
-    with open(genome_path, 'w') as file:
+    with open("testing_file.txt", 'w') as file:
         file.write("Testing write")
 
     with open(log_file, 'w') as file:
