@@ -24,9 +24,9 @@ def run_method(output_dir, name, input_files, parameters):
 
     content = f"This is the cellranger command\n{cr_command}\n\n"
 
-    # a = subprocess.run(cr_command.split(),capture_output=True,text=True)
+    a = subprocess.run(cr_command.split(),capture_output=True,text=True)
     content += f"Cellranger output: (temporarily left out)\n"
-    # content += a.stdout
+    content += a.stdout
     content += f"\n\n"
 
     # Run Bamboozle
@@ -50,18 +50,16 @@ def run_method(output_dir, name, input_files, parameters):
 
     # Remove cellranger folder (the data is not needed downstream, and takes up quite a lot of space)
     cleanup_command = f"rm -rf {cr_outdir}"
-    # a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
+    a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
 
-    content += f"All clear - successfull run\n"
-    content += f"Before try-catch\n"
     fasta_path = f"{ref_dir}/fasta/genome.fa"
     with open(genome_path, 'w') as file:
         file.write(fasta_path)
-    content += f"After try-catch\n"
-    content += f"{fasta_path}\n{genome_path}"
 
+    content += f"All clear - successfull run\n"
     with open(log_file, 'w') as file:
         file.write(content)
+
 
 
 def main():
