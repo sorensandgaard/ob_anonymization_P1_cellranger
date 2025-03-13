@@ -42,7 +42,7 @@ def run_method(output_dir, name, input_files, parameters):
     with open(genome_path, 'w') as file:
         file.write(fasta_path)
 
-    content += f"\nfasta: {fasta_path}\ngenome: {genome_path}\n
+    content += f"\nfasta: {fasta_path}\ngenome: {genome_path}\n"
     content += f"All clear - successfull run\n"
     with open(log_file, 'w') as file:
         file.write(content)
