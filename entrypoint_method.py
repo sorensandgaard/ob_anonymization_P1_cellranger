@@ -30,7 +30,7 @@ def run_method(output_dir, name, input_files, parameters):
     content += f"\n\n"
 
     # Run Bamboozle
-    mv_bam_command = f"mv {cr_outdir}/outs/possorted_genome_bam.bam {output_dir}/possorted_genome_bam.bam"
+    mv_bam_command = f"mv {cr_outdir}/outs/possorted_genome_bam.bam {output_dir}/{name}.possorted.bam"
     a = subprocess.run(mv_bam_command.split(),capture_output=True,text=True)
     content += a.stdout
     
