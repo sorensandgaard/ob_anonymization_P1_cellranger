@@ -59,7 +59,7 @@ def run_method(output_dir, name, input_files, parameters):
     with open(genome_path, 'w') as file:
         file.write(fasta_path)
 
-    content += f"\n{fasta_path}"
+    content += f"\n{fasta_path}\n{genome_path}"
 
     with open(log_file, 'w') as file:
         file.write(content)
