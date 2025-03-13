@@ -12,6 +12,7 @@ def run_method(output_dir, name, input_files, parameters):
     os.makedirs(output_dir, exist_ok=True)
     # method_mapping_file = os.path.join(output_dir, f'{name}.model.out.txt')
     log_file = os.path.join(output_dir, f'{name}.log.txt')
+    genome_path = os.path.join(output_dir, f'{name}.genome.fa')
 
     # Run Cellranger ctrl
     ref_dir = f"01_references/{parameters[0]}"
@@ -24,28 +25,21 @@ def run_method(output_dir, name, input_files, parameters):
 
     content = f"This is the cellranger command\n{cr_command}\n\n"
 
-    a = subprocess.run(cr_command.split(),capture_output=True,text=True)
+    # a = subprocess.run(cr_command.split(),capture_output=True,text=True)
     content += f"Cellranger output: (temporarily left out)\n"
-    content += a.stdout
+    # content += a.stdout
     content += f"\n\n"
-
-    # Create dummy cellranger files
-    # os.makedirs(f"{cr_outdir}/outs",exist_ok=True) # dummy creation
-    # os.makedirs(f"{cr_outdir}/outs/filtered_feature_bc_matrix",exist_ok=True) # dummy creation
-    # subprocess.run(f"cp {log_file} {cr_outdir}/outs/possorted_genome_bam.bam".split(),capture_output=True,text=True)
-    # subprocess.run(f"touch {cr_outdir}/outs/filtered_feature_bc_matrix/test1.txt".split(),capture_output=True,text=True)
-    # subprocess.run(f"touch {cr_outdir}/outs/filtered_feature_bc_matrix/test2.txt".split(),capture_output=True,text=True)
 
     # Run Bamboozle
-    bam_pos = f"{cr_outdir}/outs/possorted_genome_bam.bam"
-    ref_pos = f"{ref_dir}/fasta/genome.fa"
-    anon_bam_pos = f"{output_dir}/{name}.bamboozled.bam"
-    bamboozle_command = f"BAMboozle --bam {bam_pos} --out {anon_bam_pos} --fa {ref_pos}"
-    content += f"Bamboozle command:\n{bamboozle_command}\n"
-    a = subprocess.run(bamboozle_command.split(),capture_output=True,text=True)
-    content += f"Bamboozle output:\n"
-    content += a.stdout
-    content += f"\n\n"
+    # bam_pos = f"{cr_outdir}/outs/possorted_genome_bam.bam"
+    # ref_pos = f"{ref_dir}/fasta/genome.fa"
+    # anon_bam_pos = f"{output_dir}/{name}.bamboozled.bam"
+    # bamboozle_command = f"BAMboozle --bam {bam_pos} --out {anon_bam_pos} --fa {ref_pos}"
+    # content += f"Bamboozle command:\n{bamboozle_command}\n"
+    # a = subprocess.run(bamboozle_command.split(),capture_output=True,text=True)
+    # content += f"Bamboozle output:\n"
+    # content += a.stdout
+    # content += f"\n\n"
 
 
     # Create dummy bamboozle files
@@ -55,7 +49,7 @@ def run_method(output_dir, name, input_files, parameters):
     # cp_matrix_command = f"cp -r {cr_outdir}/outs/filtered_feature_bc_matrix {output_dir}/."
     # a = subprocess.run(cp_matrix_command.split(),capture_output=True,text=True)
 
-    # Remove cellranger folder (not needed, and takes up quite a lot of space)
+    # Remove cellranger folder (the data is not needed downstream, and takes up quite a lot of space)
     cleanup_command = f"rm -rf {cr_outdir}"
     a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
 
@@ -63,6 +57,10 @@ def run_method(output_dir, name, input_files, parameters):
 
     with open(log_file, 'w') as file:
         file.write(content)
+    
+    fasta_path = f"{ref_dir}/fasta/genome.fa"
+    with open(genome_path, 'w') as file:
+        file.write(fasta_path)
 
 def main():
     # Create argument parser
@@ -73,10 +71,6 @@ def main():
     parser.add_argument('--name', type=str, help='name of the dataset')
     parser.add_argument('--R1.counts',type=str, help='input file #1')
     parser.add_argument('--R2.counts',type=str, help='input file #1')
-#    parser.add_argument('--process.filtered', type=str, help='optional input file #1.', required=False)
-#    parser.add_argument('--data.counts', type=str, help='optional input file #1.', required=False)
-#    parser.add_argument('--data.meta', type=str, help='input file #2.')
-#    parser.add_argument('--data.data_specific_params', type=str, help='input file #3.')
 
     # Parse arguments
     args, extra_arguments = parser.parse_known_args()
