@@ -10,7 +10,6 @@ def create_file(out_filename,in_url):
 def run_method(output_dir, name, input_files, parameters):
     # Create the output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
-    # method_mapping_file = os.path.join(output_dir, f'{name}.model.out.txt')
     log_file = os.path.join(output_dir, f'{name}.log.txt')
     genome_path = os.path.join(output_dir, f'{name}.genome.fa')
 
@@ -55,9 +54,15 @@ def run_method(output_dir, name, input_files, parameters):
 
     content += f"All clear - successfull run"
     
-    fasta_path = f"{ref_dir}/fasta/genome.fa"
-    with open(genome_path, 'w') as file:
-        file.write(fasta_path)
+    log_file = os.path.join(output_dir, f'{name}.log.txt')
+    genome_path = os.path.join(output_dir, f'{name}.genome.fa')
+
+    try:
+        with open(genome_path, 'w') as file:
+            file.write(fasta_path)
+        content += f"\nSuccessfully wrote genome file: {genome_path}"
+    except Exception as e:
+        content += f"\nError: {e}
 
     content += f"\n{fasta_path}\n{genome_path}"
 
