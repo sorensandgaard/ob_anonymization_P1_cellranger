@@ -52,7 +52,7 @@ def run_method(output_dir, name, input_files, parameters):
     cleanup_command = f"rm -rf {cr_outdir}"
     a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
 
-    genome_path = os.path.join(output_dir, f'{name}.refgenome.txt')
+    genome_path = os.path.join(output_dir, f'{name}_refgenome.txt')
     a = subprocess.run(f"touch {genome_path}".split(),capture_output=True,text=True)
     content += a.stdout
 
