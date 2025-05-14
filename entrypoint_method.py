@@ -39,8 +39,9 @@ def run_method(output_dir, name, input_files, parameters):
     # a = subprocess.run(cp_matrix_command.split(),capture_output=True,text=True)
 
     # Remove cellranger folder (the data is not needed downstream, and takes up quite a lot of space)
-    # cleanup_command = f"rm -rf {cr_outdir}"
-    # a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
+    cleanup_command = f"rm -rf {cr_outdir}"
+    a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
+    content += a.stdout
 
     genome_path = os.path.join(output_dir, f'{name}.refgenome.txt')
     a = subprocess.run(f"touch {genome_path}".split(),capture_output=True,text=True)
