@@ -28,31 +28,21 @@ def run_method(output_dir, name, input_files, parameters):
     content += a.stdout
     content += f"\n\n"
 
-    # Run Bamboozle
+    # Move BAM file to header folder
     mv_bam_command = f"mv {cr_outdir}/outs/possorted_genome_bam.bam {output_dir}/{name}.possorted.bam"
     a = subprocess.run(mv_bam_command.split(),capture_output=True,text=True)
     content += a.stdout
     
-    # bam_pos = f"{cr_outdir}/outs/possorted_genome_bam.bam"
-    # ref_pos = f"{ref_dir}/fasta/genome.fa"
-    # anon_bam_pos = f"{output_dir}/{name}.bamboozled.bam"
-    # bamboozle_command = f"BAMboozle --bam {bam_pos} --out {anon_bam_pos} --fa {ref_pos}"
-    # content += f"Bamboozle command:\n{bamboozle_command}\n"
-    # a = subprocess.run(bamboozle_command.split(),capture_output=True,text=True)
-    # content += f"Bamboozle output:\n"
-    # content += a.stdout
-    # content += f"\n\n"
-
     # Move expression matrix to reference-folder for comparison (faster runtime later) 
     # * Needs edits
     # cp_matrix_command = f"cp -r {cr_outdir}/outs/filtered_feature_bc_matrix {output_dir}/."
     # a = subprocess.run(cp_matrix_command.split(),capture_output=True,text=True)
 
     # Remove cellranger folder (the data is not needed downstream, and takes up quite a lot of space)
-    cleanup_command = f"rm -rf {cr_outdir}"
-    a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
+    # cleanup_command = f"rm -rf {cr_outdir}"
+    # a = subprocess.run(cleanup_command.split(),capture_output=True,text=True)
 
-    genome_path = os.path.join(output_dir, f'{name}_refgenome.txt')
+    genome_path = os.path.join(output_dir, f'{name}.refgenome.txt')
     a = subprocess.run(f"touch {genome_path}".split(),capture_output=True,text=True)
     content += a.stdout
 
