@@ -18,8 +18,7 @@ def run_method(output_dir, name, input_files, parameters):
     os.makedirs(cr_outdir, exist_ok=True)
 
     # Run cellranger through a wrapper that loads the module
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    wrapper_path = os.path.join(script_dir, "cellranger_wrapper.sh")
+    wrapper_path = "envs/CellRanger-8.0.1_wrapper.sh")
 
     cr_command = f"{wrapper_path} count --id {name}_first_align --fastqs {input_files}"
     cr_command += f" --output-dir {cr_outdir} --transcriptome {ref_dir}"
