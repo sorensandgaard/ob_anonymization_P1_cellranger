@@ -23,6 +23,11 @@ def run_method(output_dir, name, input_files, parameters):
 
     content = f"This is the cellranger command\n{cr_command}\n\n"
 
+    import shutil
+    a = shutil.which("cellranger")
+
+    content += f"This is the shutil output\n{a}\n"
+
     with open(log_file, 'w') as file:
         file.write(content)
 
