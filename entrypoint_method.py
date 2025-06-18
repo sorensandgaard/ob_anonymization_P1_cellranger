@@ -26,6 +26,9 @@ def run_method(output_dir, name, input_files, parameters):
     with open(log_file, 'w') as file:
         file.write(content)
 
+    # Try loading cellranger beforehand
+    a = subprocess.run(f"module load CellRanger/8.0.1".split(),capture_output=True,text=True)
+
     a = subprocess.run(cr_command.split(),capture_output=True,text=True)
     content += f"Cellranger output: (temporarily left out)\n"
     content += a.stdout
