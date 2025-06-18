@@ -17,7 +17,7 @@ def run_method(output_dir, name, input_files, parameters):
     cr_outdir = f"{output_dir}/cellranger_out"
     os.makedirs(cr_outdir, exist_ok=True)
 
-    cr_command = f"cellranger count --id {name}_first_align --fastqs {input_files}"
+    cr_command = f"./cellranger_wrapper.sh count --id {name}_first_align --fastqs {input_files}"
     cr_command += f" --output-dir {cr_outdir} --transcriptome {ref_dir}"
     cr_command += f" --create-bam true --expect-cells 15000 --localcores 24 --localmem 100"
 
