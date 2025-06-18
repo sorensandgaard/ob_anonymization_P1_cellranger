@@ -1,5 +1,7 @@
 #!/bin/bash
 
+exec > check_env.log 2>&1
+
 echo "=== Checking loaded modules at runtime ==="
 module list 2>&1
 
