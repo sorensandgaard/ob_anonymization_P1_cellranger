@@ -7,7 +7,7 @@ def create_file(out_filename,in_url):
     r = requests.get(in_url, allow_redirects=True)
     open(out_filename, 'wb').write(r.content)
 
-def run_method(output_dir, name, input_files, parameters):
+def run_method(output_dir, name, fastq_path, parameters):
     # Create the output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
     log_file = os.path.join(output_dir, f'{name}.log.txt')
@@ -20,7 +20,7 @@ def run_method(output_dir, name, input_files, parameters):
     # Run cellranger through a wrapper that loads the module
     wrapper_path = f"envs/CellRanger-{parameters[1]}_wrapper.sh"
 
-    cr_command = f"{wrapper_path} count --id {name}_first_align --fastqs {input_files}"
+    cr_command = f"{wrapper_path} count --id {name}_first_align --fastqs {fastq_path}"
     cr_command += f" --output-dir {cr_outdir} --transcriptome {ref_dir}"
     cr_command += f" --create-bam true --expect-cells 15000 --localcores 24 --localmem 100"
 
@@ -76,27 +76,16 @@ def main():
     parser.add_argument('--name', type=str, help='name of the dataset')
     parser.add_argument('--R1.counts',type=str, help='input file #1')
     parser.add_argument('--R2.counts',type=str, help='input file #1')
+    parser.add_argument('--init.reads.path',type=str, help="txt file containing the path to the initial fastq files"
 
     # Parse arguments
     args, extra_arguments = parser.parse_known_args()
+    init_reads_paths = "data/"
+#     R1_input = getattr(args, 'R1.counts')
+#     R2_input = getattr(args, 'R2.counts')
+#     fastq_paths = os.path.dirname(R1_input) + f"/"
 
-    R1_input = getattr(args, 'R1.counts')
-    R2_input = getattr(args, 'R2.counts')
-    fastq_paths = os.path.dirname(R1_input) + f"/"
-
-#    process_filtered_input = getattr(args, 'process.filtered')
-#    data_counts_input = getattr(args, 'data.counts')
-#    data_meta_input = getattr(args, 'data.meta')
-#    data_params_input = getattr(args, 'data.data_specific_params')
-
-#    assert process_filtered_input is not None or data_counts_input is not None, "At least one of the values must not be None"
-#    data_counts_input = process_filtered_input if process_filtered_input else data_counts_input
-
-    input_files = [R1_input, R2_input]
-
-    # run_method(args.output_dir, args.name, input_files, extra_arguments)
-    run_method(args.output_dir, args.name, fastq_paths, extra_arguments)
-
+    run_method(args.output_dir, args.name, init_reads_paths, extra_arguments)
 
 if __name__ == "__main__":
     main()
