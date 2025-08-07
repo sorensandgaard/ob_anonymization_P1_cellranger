@@ -76,7 +76,7 @@ def main():
     parser.add_argument('--name', type=str, help='name of the dataset')
     parser.add_argument('--R1.counts',type=str, help='input file #1')
     parser.add_argument('--R2.counts',type=str, help='input file #1')
-    parser.add_argument('--init.reads.path',type=str, help="txt file containing the path to the initial fastq files"
+    parser.add_argument('--init.reads.path',type=str, help="txt file containing the path to the initial fastq files")
 
     # Parse arguments
     args, extra_arguments = parser.parse_known_args()
