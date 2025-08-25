@@ -12,6 +12,10 @@ def run_method(output_dir, name, fastq_path, parameters):
 #    os.makedirs(output_dir, exist_ok=True)
     log_file = os.path.join(output_dir, f'{name}.log.txt')
 
+    content = f"All clear - successfull run\n"
+    with open(log_file, 'w') as file:
+        file.write(content)
+
     # Run Cellranger ctrl
     ref_dir = f"01_references/{parameters[0]}"
     cr_outdir = f"{output_dir}/cellranger_out"
