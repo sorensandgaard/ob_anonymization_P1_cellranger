@@ -16,6 +16,8 @@ def run_method(output_dir, name, fastq_path, parameters):
     with open(log_file, 'w') as file:
         file.write(content)
 
+    return(1)
+
     # Run Cellranger ctrl
     ref_dir = f"01_references/{parameters[0]}"
     cr_outdir = f"{output_dir}/cellranger_out"
